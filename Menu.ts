@@ -1,12 +1,31 @@
 import readlinesync = require("readline-sync");
+import { colors } from './src/util/Colors';
+import { Bolsa } from './src/model/Bolsa';
+import { BolsaBasica } from "./src/model/BolsaBasica";
+import { BolsaLuxo } from "./src/model/BolsaLuxo";
 
-export function main() {
-    
+export function main() {    
+
     let opcao: number;
+
+    const bolsaBasica: BolsaBasica = new BolsaBasica(2, "Bolsa Jeans", 200.00, 5, "Jeans");
+    bolsaBasica.visualizar();
+    bolsaBasica.vender(1);
+    bolsaBasica.visualizar();
+    bolsaBasica.adicionarEstoque(2);
+    bolsaBasica.visualizar();
+
+    const bolsaLuxo: BolsaLuxo = new BolsaLuxo(3, "Bolsa Swarovski", 2000.00, 3, "Pedraria");
+    bolsaLuxo.visualizar();
+    bolsaLuxo.vender(1);
+    bolsaLuxo.visualizar();
+    bolsaLuxo.adicionarEstoque(3);
+    bolsaLuxo.visualizar();
 
     while (true) {
 
-        console.log("=====================================================");
+        console.log(colors.bg.black, colors.fg.blue,
+                    "=====================================================");
         console.log("                                                     ");
         console.log("-------------------BOLSA DO PODER--------------------");
         console.log("                                                     ");
@@ -22,53 +41,55 @@ export function main() {
         console.log("             9 - Sair                                ");
         console.log("                                                     ");
         console.log("=====================================================");
-        console.log("                                                     ");
+        console.log("                                                     ",
+        colors.reset);
 
         console.log("Entre com a opção desejada: ");
         opcao = readlinesync.questionInt("");
 
         if (opcao == 9) {
-            console.log("\nSe não for pra causar, nem saio com ela!");
+            console.log(colors.fg.cyan,
+                "\nSe não for pra causar, nem saio com ela!");
             sobre();
+            console.log(colors.reset, "");
             process.exit(0);
 
     }
 
         switch (opcao) {
             case 1:
-                console.log("\n\nCadastrar Bolsa\n\n");
-
+                console.log(colors.fg.magenta, "\n\nCadastrar Bolsa\n\n", colors.reset);
+                
                 break;
             case 2:
-                console.log("\n\nListar Bolsa\n\n");
-
+                console.log(colors.fg.magenta, "\n\nListar Bolsa\n\n", colors.reset);
+              
                 break;
             case 3:
-                console.log("\n\nBuscar Bolsa por Nome\n\n");
-
+                console.log(colors.fg.magenta, "\n\nBuscar Bolsa por Nome\n\n", colors.reset);
+              
                 break;
             case 4:
-                console.log("\n\nAtualizar Bolsa\n\n");
-
+                console.log(colors.fg.magenta, "\n\nAtualizar Bolsa\n\n", colors.reset);
+                
                 break;
             case 5:
-                console.log("\n\nRemover Bolsa\n\n");
-
+                console.log(colors.fg.magenta, "\n\nRemover Bolsa\n\n", colors.reset);
+                
                 break;
             case 6:
-                console.log("\n\nAdicionar Estoque\n\n");
-
-                break;
+                console.log(colors.fg.magenta, "\n\nAdicionar Estoque\n\n", colors.reset);
+                
             case 7:
-                console.log("\n\nVender Bolsa\n\n");
+                console.log(colors.fg.magenta, "\n\nVender Bolsa\n\n", colors.reset);
 
                 break;
             case 8:
-                console.log("\n\nVer Total em Estoque\n\n");
+                console.log(colors.fg.magenta, "\n\nVer Total em Estoque\n\n", colors.reset);
 
                 break;
             default:
-                console.log("\nOpção Inválida!\n");
+                console.log(colors.fg.magenta, "\nOpção Inválida!\n", colors.reset);
 
                 break;
         }
