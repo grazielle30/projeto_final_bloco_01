@@ -3,10 +3,20 @@ import { colors } from './src/util/Colors';
 import { Bolsa } from './src/model/Bolsa';
 import { BolsaBasica } from "./src/model/BolsaBasica";
 import { BolsaLuxo } from "./src/model/BolsaLuxo";
+import { BolsaController } from "./src/controller/BolsaController";
+import { compileFunction } from "vm";
 
 export function main() {    
 
+    let bolsas: BolsaController = new BolsaController(); 
+
     let opcao: number;
+    let numero: number;
+    let preco: number;
+    let estoque: number;
+    let tipoBolsa: number;
+    let nome: string;
+  
 
     const bolsaBasica: BolsaBasica = new BolsaBasica(2, "Bolsa Jeans", 200.00, 5, "Jeans");
     bolsaBasica.visualizar();
@@ -59,38 +69,81 @@ export function main() {
         switch (opcao) {
             case 1:
                 console.log(colors.fg.magenta, "\n\nCadastrar Bolsa\n\n", colors.reset);
-                
+
+                console.log("Digite o nome da Bolsa: ");
+                nome = readlinesync.question("");
+
+                console.log("Digite o preco da Bolsa: ");
+                preco = readlinesync.questionFloat("");
+
+                console.log("Digite o estoque Inicial: ");
+                estoque = readlinesync.questionInt("");
+
+                console.log("Digite o tipo de Bolsa: ");
+                tipoBolsa = readlinesync.keyInSelect(["Comum", "Luxo"],"", {cancel: false}) + 1;
+
+                console.log("Digite o material da bolsa: ");
+                let material = readlinesync.question("");
+
+                switch (tipoBolsa) {
+                    case 1:                        
+                        let material: string = readlinesync.question("");
+                        bolsas.cadastrar(
+                            new BolsaBasica(bolsas.gerarNumero(), nome, preco,estoque, material));
+                            
+
+                        break;    
+                    case 2:
+                        let designer: string = readlinesync.question("");                        
+                        bolsas.cadastrar(
+                            new BolsaLuxo(bolsas.gerarNumero(), nome, preco, estoque, designer));                            
+                        
+                        break;  
+                               
+                }
+
+                keyPress()
                 break;
             case 2:
                 console.log(colors.fg.magenta, "\n\nListar Bolsa\n\n", colors.reset);
-              
+                bolsas.listarTodas();
+
+                keyPress()
                 break;
             case 3:
                 console.log(colors.fg.magenta, "\n\nBuscar Bolsa por Nome\n\n", colors.reset);
-              
+
+                keyPress()
                 break;
             case 4:
                 console.log(colors.fg.magenta, "\n\nAtualizar Bolsa\n\n", colors.reset);
-                
+
+                keyPress()
                 break;
             case 5:
                 console.log(colors.fg.magenta, "\n\nRemover Bolsa\n\n", colors.reset);
-                
+
+                keyPress()
                 break;
             case 6:
                 console.log(colors.fg.magenta, "\n\nAdicionar Estoque\n\n", colors.reset);
-                
+
+                keyPress()
+                break;
             case 7:
                 console.log(colors.fg.magenta, "\n\nVender Bolsa\n\n", colors.reset);
 
+                keyPress()
                 break;
             case 8:
                 console.log(colors.fg.magenta, "\n\nVer Total em Estoque\n\n", colors.reset);
 
+                keyPress()
                 break;
             default:
                 console.log(colors.fg.magenta, "\nOpção Inválida!\n", colors.reset);
 
+                keyPress()
                 break;
         }
 
@@ -104,4 +157,14 @@ export function sobre(): void {
     console.log("github.com/grazielle30");
 }    
 
+function keyPress(): void {
+    console.log(colors.reset, "");
+    console.log("\nPressione enter para continuar...");
+    readlinesync.prompt();
+}
+
 main();
+
+function gerarNumero(): string {
+    throw new Error("Function not implemented.");
+}
